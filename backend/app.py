@@ -14,9 +14,27 @@ CORS(app)
 def index():
     return {"msg":"Index"},200
 
-@app.route('/crypto')
+@app.route('/cryptolist')
 def getCrypto():
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': '9a668257-6325-4ee9-811f-0b35c0d3540d',
+    }
+    session = Session()
+    session.headers.update(headers)
+
+    try:
+        response = session.get(url)
+        data = json.loads(response.text)
+        return data,200
+    except Exception as e:
+        return "something went wrong",500
+
+@app.route('/crypto/<string:id>')
+def getCoin(id):
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=' + id
+    print(url)
     headers = {
         'Accepts': 'application/json',
         'X-CMC_PRO_API_KEY': '9a668257-6325-4ee9-811f-0b35c0d3540d',
