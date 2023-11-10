@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask import jsonify
 from requests import Request, Session
 import json
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -19,7 +20,7 @@ def getCrypto():
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
     headers = {
         'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': '9a668257-6325-4ee9-811f-0b35c0d3540d',
+        'X-CMC_PRO_API_KEY': os.environ.get("CMC_PRO_API_KEY"),
     }
     session = Session()
     session.headers.update(headers)
@@ -37,7 +38,7 @@ def getCoin(id):
     print(url)
     headers = {
         'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': '9a668257-6325-4ee9-811f-0b35c0d3540d',
+        'X-CMC_PRO_API_KEY': os.environ.get("CMC_PRO_API_KEY"),
     }
     session = Session()
     session.headers.update(headers)
